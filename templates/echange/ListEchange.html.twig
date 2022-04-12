@@ -1,0 +1,39 @@
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table datatable">
+                <thead>
+                <tr>
+                    <td> ID Echange </td>
+                    <td> Id membre1 </td>
+                    <td> Id membre2 </td>
+                    <td> Id article1 </td>
+                    <td> Id article2 </td>
+                    <td> etat </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for u in Echange %}
+                    <tr>
+                        <td>{{u.idechange}}</td>
+                        <td>{{u.idmembre1}}</td>
+                        <td>{{u.idmembre2}}</td>
+                        <td>{{u.idarticle1}}</td>
+                        <td>{{u.idarticle2}}</td>
+                        <td>{{u.etat}}</td>
+
+                        <td><a href=" {{ path('delete' ,{'idechange':u.idechange})}} ">Delete</a></td>
+                        <td><a href=" {{ path('update' ,{'idechange':u.idechange})}} ">UPDATE</a></td>
+
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

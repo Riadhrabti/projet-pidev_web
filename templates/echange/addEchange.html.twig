@@ -1,0 +1,49 @@
+
+{% block body %}
+
+
+{{ form_start(form) }}
+
+
+
+<table>
+
+
+    <tr>
+        <th>{{ form_label(form.idechange) }}</th>
+        <th>{{ form_widget(form.idechange) }}</th>
+        <th>{{ form_errors(form.idechange) }}</th>
+    </tr>
+
+    <tr>
+        <th>{{ form_label(form.idmembre1) }}</th>
+        <th>{{ form_widget(form.idmembre1) }}</th>
+        <th>{{ form_errors(form.idmembre1) }}</th>
+    </tr>
+
+    <tr>
+        <th>{{ form_label(form.idmembre2) }}</th>
+        <th>{{ form_widget(form.idmembre2) }}</th>
+        <th>{{ form_errors(form.idmembre2) }}</th>
+    </tr>
+
+    <tr>
+        <th>{{ form_label(form.idarticle1) }}</th>
+        <th>{{ form_widget(form.idarticle1) }}</th>
+        <th>{{ form_errors(form.idarticle1) }}</th>
+    </tr>
+
+    <tr>
+        <th>{{ form_label(form.idarticle2) }}</th>
+        <th>{{ form_widget(form.idarticle2) }}</th>
+        <th>{{ form_errors(form.idarticle2) }}</th>
+    </tr>
+    <tr>
+        <th>{{ form_label(form.etat) }}</th>
+        <th>{{ form_widget(form.etat) }}</th>
+        <th>{{ form_errors(form.etat) }}</th>
+    </tr>
+
+</table>
+{{ form_end(form) }}
+{% endblock %}
