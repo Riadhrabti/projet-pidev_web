@@ -49,6 +49,7 @@ class Echange
     {
 
     }
+
     public function getIdechange()
     {
         return $this->idechange;

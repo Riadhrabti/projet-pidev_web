@@ -1,0 +1,40 @@
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <h1>liste des Reclamations</h1>
+            <table border="1" class="table datatable">
+                <thead>
+                <tr>
+                    <td> ID  </td>
+                    <td> titre </td>
+                    <td> Id membre </td>
+                    <td> date rec </td>
+                    <td> Description </td>
+                    <td> etat </td>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for R in Reclamation %}
+                    <tr>
+                        <td>{{R.id}}</td>
+                        <td>{{R.titre}}</td>
+                        <td>{{R.idmembre}}</td>
+                        <td>{{R.Daterec}}</td>
+                        <td>{{R.Description}}</td>
+                        <td>{{R.etat}}</td>
+
+                        <td><a href=" {{ path('delete' ,{'id':R.id})}} ">Delete</a></td>
+                        <td><a href=" {{ path('update' ,{'id':R.id})}} ">update</a></td>
+
+
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

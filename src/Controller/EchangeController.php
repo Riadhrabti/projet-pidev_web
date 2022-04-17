@@ -39,7 +39,6 @@ class EchangeController extends AbstractController
      */
     function add(Request $request)
     {
-
         $Echange =new Echange();
         $form=$this->createForm(EchangeAddType::class, $Echange);
         $form->add('add', SubmitType::class);
@@ -47,17 +46,13 @@ class EchangeController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
             $em=$this->getDoctrine()->getManager();
-
-
-            $em->persist($Echange
-            );
+            $em->persist($Echange);
             $em->flush();
             return  $this->redirectToRoute('Echanges');
         }
 
         return $this->render('echange/addEchange.html.twig',[
             'form' => $form->createView()
-
         ]);
     }
     /**
@@ -81,6 +76,7 @@ class EchangeController extends AbstractController
 
         $Echange=$repository->find($idechange);
         $form=$this->createForm(EchangeAddType::class,$Echange);
+        $form->add('update', SubmitType::class);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){

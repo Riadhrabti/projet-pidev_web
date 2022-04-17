@@ -14,11 +14,15 @@ class EchangeAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('idmembre1',TextType::class)
-            ->add('idmembre2',TextType::class)
-            ->add('idarticle1',TextType::class)
-            ->add('idarticle2',TextType::class)
-            ->add('etat',TextType::class)
+            ->add('idmembre1',TextType::class,
+                ['attr'=>['placeholder'=>'faire entrer l id membre1']])
+            ->add('idmembre2',TextType::class,
+                ['attr'=>['placeholder'=>'faire entrer l id membre2']])
+            ->add('idarticle1',TextType::class,
+                ['attr'=>['placeholder'=>'faire entrer l id article1']])
+            ->add('idarticle2',TextType::class,
+                ['attr'=>['placeholder'=>'faire entrer l id article2']])
+            ->add('etat',TextType::class,['attr'=>['placeholder'=>'faire entrer l etat']])
         ;
     }
 
