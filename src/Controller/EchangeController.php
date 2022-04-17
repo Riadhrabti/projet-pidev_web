@@ -2,14 +2,15 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Echange;
-use App\Form\EchangeAddType;
+use App\Form\EchangeType;
 use App\Repository\EchangeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 
 
@@ -19,16 +20,16 @@ class EchangeController extends AbstractController
     /**
      * @Route("/Echanges", name="Echanges")
      */
-    public function ListEchanges(EchangeRepository $repository)
+    public function ListEchanges(EchangeRepository  $echangeRepository)
     {
         return $this->render('Echange/ListEchange.html.twig', [
-            'Echange' => $repository->findAll()
+            'Echange' => $echangeRepository->findAll()
         ]);
     }
     /**
      * @Route("/frontC", name="frontC")
      */
-    public function Client(EchangeRepository $repository)
+    public function Client()
     {
         return $this->render('echange/frontC.html.twig');
     }
@@ -39,14 +40,13 @@ class EchangeController extends AbstractController
      */
     function add(Request $request)
     {
-        $Echange =new Echange();
-        $form=$this->createForm(EchangeAddType::class, $Echange);
-        $form->add('add', SubmitType::class);
+        $echange = new Echange();
+        $form = $this->createForm(EchangeType::class, $echange);
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid()){
+
             $em=$this->getDoctrine()->getManager();
-            $em->persist($Echange);
+            $em->persist($echange);
             $em->flush();
             return  $this->redirectToRoute('Echanges');
         }
@@ -56,12 +56,13 @@ class EchangeController extends AbstractController
         ]);
     }
     /**
-     * @Route("/DeleteEchange/{idechange}",name="delete")
+     * @Route("/DeleteEchange/{id}",name="delete")
      */
-    public  function  deleteEchange($idechange){
+    public  function  deleteEchange($id){
         $em=$this->getDoctrine()->getManager();
-        $Echange=$em->getRepository(Echange::class)->find($idechange);
-        $em->remove( $Echange);
+        $Echange=$em->getRepository(Echange::class)->find($id);
+        dump($Echange);die();
+        $em->remove($Echange);
         $em->flush();
         return $this->redirectToRoute('Echanges');
 
@@ -71,24 +72,24 @@ class EchangeController extends AbstractController
      *@return \Symfony\Component\HttpFoundation\Response
      * @Route ("Echange/update/{idechange}",name="update");
      */
-    function  update(Request $request ,EchangeRepository  $repository ,$idechange)
+    function  update(Request $request  ,$idechange)
     {
 
-        $Echange=$repository->find($idechange);
-        $form=$this->createForm(EchangeAddType::class,$Echange);
-        $form->add('update', SubmitType::class);
-        $form->handleRequest($request);
+//        $Echange=$repository->find($idechange);
+//        $form=$this->createForm(EchangeAddType::class,$Echange);
+//        $form->add('update', SubmitType::class);
+//        $form->handleRequest($request);
+//
+//        if($form->isSubmitted() && $form->isValid()){
+//            $em=$this->getDoctrine()->getManager();
+//            $em->flush();
+//            return  $this->redirectToRoute('Echanges');
+//        }
 
-        if($form->isSubmitted() && $form->isValid()){
-            $em=$this->getDoctrine()->getManager();
-            $em->flush();
-            return  $this->redirectToRoute('Echanges');
-        }
-
-        return $this->render('echange/update.html.twig',[
-            'form' => $form->createView()
-
-        ]);
+//        return $this->render('echange/update.html.twig',[
+//            'form' => $form->createView()
+//
+//        ]);
 
     }
 }

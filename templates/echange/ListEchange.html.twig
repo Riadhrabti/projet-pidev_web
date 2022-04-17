@@ -25,9 +25,10 @@
                         <td>{{E.idarticle1}}</td>
                         <td>{{E.idarticle2}}</td>
                         <td>{{E.etat}}</td>
+                        {{ dump(E) }}
 
-                        <td><a href=" {{ path('delete' ,{'idechange':E.idechange})}} ">Delete</a></td>
-                        <td><a href=" {{ path('update' ,{'idechange':E.idechange})}} ">UPDATE</a></td>
+                        <td><a href=" {{ path('delete' ,{'id':E.idechange})}} ">Delete</a></td>
+                        <td><a href=" {{ path('update' ,{'id':E.idechange})}} ">UPDATE</a></td>
 
                     </tr>
 
