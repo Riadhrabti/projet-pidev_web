@@ -16,7 +16,7 @@ class ReclamationAddType extends AbstractType
             ->add('idmembre')
             ->add('Daterec')
             ->add('description')
-            ->add('idechange')
+
             ->add('etat')
         ;
     }

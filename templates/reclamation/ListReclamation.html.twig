@@ -10,6 +10,7 @@
                     <td> Id membre </td>
                     <td> date rec </td>
                     <td> Description </td>
+                    <td> id echange </td>
                     <td> etat </td>
 
                 </tr>
@@ -22,6 +23,7 @@
                         <td>{{R.idmembre}}</td>
                         <td>{{R.Daterec}}</td>
                         <td>{{R.Description}}</td>
+                        <td>{{R.idechange}}</td>
                         <td>{{R.etat}}</td>
 
                         <td><a href=" {{ path('delete' ,{'id':R.id})}} ">Delete</a></td>

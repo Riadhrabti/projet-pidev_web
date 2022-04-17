@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Echange;
 use App\Form\EchangeType;
 use App\Repository\EchangeRepository;
+use App\Repository\ReclamationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,12 +57,12 @@ class EchangeController extends AbstractController
         ]);
     }
     /**
-     * @Route("/DeleteEchange/{id}",name="delete")
+     * @Route("/DeleteEchange/{id}",name="deleteEchange")
      */
     public  function  deleteEchange($id){
         $em=$this->getDoctrine()->getManager();
         $Echange=$em->getRepository(Echange::class)->find($id);
-        dump($Echange);die();
+
         $em->remove($Echange);
         $em->flush();
         return $this->redirectToRoute('Echanges');
@@ -70,26 +71,23 @@ class EchangeController extends AbstractController
     /**
      * @param  Request $request
      *@return \Symfony\Component\HttpFoundation\Response
-     * @Route ("Echange/update/{idechange}",name="update");
+     * @Route ("Echange/update/{id}",name="updateEchange");
      */
-    function  update(Request $request  ,$idechange)
+    function  update(Request $request,EchangeRepository $repository ,$id)
     {
 
-//        $Echange=$repository->find($idechange);
-//        $form=$this->createForm(EchangeAddType::class,$Echange);
-//        $form->add('update', SubmitType::class);
-//        $form->handleRequest($request);
-//
-//        if($form->isSubmitted() && $form->isValid()){
-//            $em=$this->getDoctrine()->getManager();
-//            $em->flush();
-//            return  $this->redirectToRoute('Echanges');
-//        }
+        $Echange=$repository->find($id);
+        $form=$this->createForm(EchangeType::class,$Echange);
+        $form->handleRequest($request);
 
-//        return $this->render('echange/update.html.twig',[
-//            'form' => $form->createView()
-//
-//        ]);
-
+        if($form->isSubmitted() && $form->isValid()){
+            $em=$this->getDoctrine()->getManager();
+            $em->flush();
+            return  $this->redirectToRoute('Echanges');
+        }
+        return $this->render('echange/update.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
+
 }

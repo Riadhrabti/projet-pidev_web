@@ -46,11 +46,13 @@ class ReclamationController extends AbstractController
     /**
      * @param  Request $request
      *@return \Symfony\Component\HttpFoundation\Response
-     * @Route ("/addReclamation" , name="addReclamation");
+     * @Route ("/addReclamation/{id}" , name="addReclamation");
      */
-    function addReclamation(Request $request)
+    function addReclamation(Request $request, $id)
     {
+
         $Reclamation =new Reclamation();
+        $Reclamation->setIdechange($id);
         $form=$this->createForm(ReclamationAddType::class, $Reclamation);
         $form->add('add', SubmitType::class);
         $form->handleRequest($request);
@@ -91,6 +93,26 @@ class ReclamationController extends AbstractController
         ]);
 
     }
-
+    /**
+     * @param  Request $request
+     *@return \Symfony\Component\HttpFoundation\Response
+     * @Route ("Echange/reclamation/{id}",name="reclamerEchange");
+     */
+//    function  Reclamer(Request $request,ReclamationRepository $repository,$id)
+//    {
+//
+//        $Echange=$repository->find($id);
+//        $form=$this->createForm(EchangeType::class,$Echange);
+//        $form->handleRequest($request);
+//
+//        if($form->isSubmitted() && $form->isValid()){
+//            $em=$this->getDoctrine()->getManager();
+//            $em->flush();
+//            return  $this->redirectToRoute('Echanges');
+//        }
+//        return $this->render('echange/update.html.twig',[
+//            'form' => $form->createView()
+//        ]);
+//    }
 
 }

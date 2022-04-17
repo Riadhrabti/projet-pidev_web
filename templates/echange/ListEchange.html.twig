@@ -19,16 +19,18 @@
                 <tbody>
                 {% for E in Echange %}
                     <tr>
-                        <td>{{E.idechange}}</td>
+                        <td>{{E.id}}</td>
                         <td>{{E.idmembre1}}</td>
                         <td>{{E.idmembre2}}</td>
                         <td>{{E.idarticle1}}</td>
                         <td>{{E.idarticle2}}</td>
                         <td>{{E.etat}}</td>
-                        {{ dump(E) }}
 
-                        <td><a href=" {{ path('delete' ,{'id':E.idechange})}} ">Delete</a></td>
-                        <td><a href=" {{ path('update' ,{'id':E.idechange})}} ">UPDATE</a></td>
+
+                        <td><a href=" {{ path('deleteEchange' ,{'id':E.id})}} ">Delete</a></td>
+                        <td><a href=" {{ path('updateEchange' ,{'id':E.id})}} ">UPDATE</a></td>
+                        <td><a href=" {{ path('addReclamation' ,{'id':E.id})}} ">Reclamer</a></td>
+
 
                     </tr>
 

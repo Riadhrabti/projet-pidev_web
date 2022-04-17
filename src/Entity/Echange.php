@@ -13,9 +13,9 @@ class Echange
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",name="idechange")
      */
-    private $idechange;
+    private $id;
 
     /**
      * @ORM\Column(type="integer")
@@ -42,9 +42,9 @@ class Echange
      */
     private $etat;
 
-    public function getIdechange(): ?int
+    public function getId(): ?int
     {
-        return $this->idechange;
+        return $this->id;
     }
 
     public function getIdmembre1(): ?int
