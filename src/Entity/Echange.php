@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EchangeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EchangeRepository::class)
@@ -19,26 +20,32 @@ class Echange
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(message="this field should not be blank")
      */
     private $idmembre1;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(message="this field should not be blank")
      */
     private $idmembre2;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(message="this field should not be blank")
      */
     private $idarticle1;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(message="this field should not be blank")
      */
     private $idarticle2;
 
     /**
      * @ORM\Column(type="integer")
+     *  @Assert\NotBlank(message="this field should not be blank")
+     *
      */
     private $etat;
 

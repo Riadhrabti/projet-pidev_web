@@ -53,12 +53,14 @@ class ReclamationController extends AbstractController
 
         $Reclamation =new Reclamation();
         $Reclamation->setIdechange($id);
+
         $form=$this->createForm(ReclamationAddType::class, $Reclamation);
         $form->add('add', SubmitType::class);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
             $em=$this->getDoctrine()->getManager();
+            $Reclamation->setEtat(0);
             $em->persist($Reclamation);
             $em->flush();
             return  $this->redirectToRoute('Reclamations');
@@ -96,23 +98,33 @@ class ReclamationController extends AbstractController
     /**
      * @param  Request $request
      *@return \Symfony\Component\HttpFoundation\Response
-     * @Route ("Echange/reclamation/{id}",name="reclamerEchange");
+     * @Route ("Reclamation/accepter/{id}",name="accepter");
      */
-//    function  Reclamer(Request $request,ReclamationRepository $repository,$id)
-//    {
-//
-//        $Echange=$repository->find($id);
-//        $form=$this->createForm(EchangeType::class,$Echange);
-//        $form->handleRequest($request);
-//
-//        if($form->isSubmitted() && $form->isValid()){
-//            $em=$this->getDoctrine()->getManager();
-//            $em->flush();
-//            return  $this->redirectToRoute('Echanges');
-//        }
-//        return $this->render('echange/update.html.twig',[
-//            'form' => $form->createView()
-//        ]);
-//    }
+    function  accpeterReclamation(Request $request ,ReclamationRepository $repository ,$id)
+    {
 
+        $Reclamation = $repository->find($id);
+        $Reclamation->setEtat(1);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        return $this->redirectToRoute('Reclamations');
+
+    }
+    /**
+     * @param  Request $request
+     *@return \Symfony\Component\HttpFoundation\Response
+     * @Route ("Reclamation/refuser/{id}",name="refuser");
+     */
+    function  refuserReclamation(Request $request ,ReclamationRepository $repository ,$id)
+    {
+
+        $Reclamation = $repository->find($id);
+        $Reclamation->setEtat(2);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+        return $this->redirectToRoute('Reclamations');
+
+    }
 }

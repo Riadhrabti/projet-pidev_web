@@ -2,8 +2,39 @@
 {% block body %}
 
 
-{{ form_start(form) }}
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    <table>
+        <tr>
 
-    
+            <td>{{ form_label(form.idmembre1) }}</td>
+            <td>{{ form_widget(form.idmembre1) }}</td>
+            <td>{{ form_errors(form.idmembre1) }}</td>
+        </tr>
+        <tr>
+
+            <td>{{ form_label(form.idmembre2) }}</td>
+            <td>{{ form_widget(form.idmembre2) }}</td>
+            <td>{{ form_errors(form.idmembre2) }}</td>
+        </tr>
+        <tr>
+
+            <td>{{ form_label(form.idarticle1) }}</td>
+            <td>{{ form_widget(form.idarticle1) }}</td>
+            <td>{{ form_errors(form.idarticle1) }}</td>
+        </tr>
+        <tr>
+
+            <td>{{ form_label(form.idarticle2) }}</td>
+            <td>{{ form_widget(form.idarticle2) }}</td>
+            <td>{{ form_errors(form.idarticle2) }}</td>
+        </tr>
+        <tr>
+
+            <td>{{ form_label(form.etat) }}</td>
+            <td>{{ form_widget(form.etat) }}</td>
+            <td>{{ form_errors(form.etat) }}</td>
+        </tr>
+
+    </table>
 {{ form_end(form) }}
 {% endblock %}

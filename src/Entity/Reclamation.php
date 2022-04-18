@@ -20,6 +20,7 @@ class Reclamation
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\NotBlank(message="this field should not be blank")
      */
     private $titre;
 

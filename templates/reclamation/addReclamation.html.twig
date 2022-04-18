@@ -1,8 +1,35 @@
 {% block body %}
 
 
-    {{ form_start(form) }}
+    {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    <table>
+        <tr>
 
+            <td>{{ form_label(form.titre) }}</td>
+            <td>{{ form_widget(form.titre) }}</td>
+            <td>{{ form_errors(form.titre) }}</td>
+        </tr>
+        <tr>
+
+            <td>{{ form_label(form.idmembre) }}</td>
+            <td>{{ form_widget(form.idmembre) }}</td>
+            <td>{{ form_errors(form.idmembre) }}</td>
+        </tr>
+        <tr>
+
+            <td>{{ form_label(form.Daterec) }}</td>
+            <td>{{ form_widget(form.Daterec) }}</td>
+            <td>{{ form_errors(form.Daterec) }}</td>
+        </tr>
+        <tr>
+
+            <td>{{ form_label(form.description) }}</td>
+            <td>{{ form_widget(form.description) }}</td>
+            <td>{{ form_errors(form.description) }}</td>
+        </tr>
+
+
+    </table>
 
     {{ form_end(form) }}
 {% endblock %}
