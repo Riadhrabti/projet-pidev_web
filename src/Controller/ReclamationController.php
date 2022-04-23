@@ -103,7 +103,7 @@ class ReclamationController extends AbstractController
      *@return \Symfony\Component\HttpFoundation\Response
      * @Route ("Reclamation/accepter/{id}",name="accepter");
      */
-    function  accpeterReclamation(Request $request ,ReclamationRepository $repository ,$id,FlashyNotifier $flashy)
+    function  accpeterReclamation(Request $request ,ReclamationRepository $repository ,$id,FlashyNotifier $flashy,\Swift_Mailer $mailer)
     {
 
         $Reclamation = $repository->find($id);
@@ -111,6 +111,15 @@ class ReclamationController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
+        $message = (new \Swift_Message('You Got Mail!'))
+                ->setFrom('riadhrabti@gmail.com')
+                ->setTo('riadh.rabti@esprit.tn')
+                ->setBody(
+                    'votre reclamation a été accepté par l admin du page '
+        )
+    ;
+
+           $mailer->send($message);
         $flashy->info('Reclamation accepté');
         return $this->redirectToRoute('Reclamations');
 
@@ -120,7 +129,7 @@ class ReclamationController extends AbstractController
      *@return \Symfony\Component\HttpFoundation\Response
      * @Route ("Reclamation/refuser/{id}",name="refuser");
      */
-    function  refuserReclamation(Request $request ,ReclamationRepository $repository ,$id,FlashyNotifier $flashy)
+    function  refuserReclamation(Request $request ,ReclamationRepository $repository ,$id,FlashyNotifier $flashy,\Swift_Mailer $mailer)
     {
 
         $Reclamation = $repository->find($id);
@@ -128,6 +137,15 @@ class ReclamationController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
+        $message = (new \Swift_Message('You Got Mail!'))
+            ->setFrom('riadhrabti@gmail.com')
+            ->setTo('riadh.rabti@esprit.tn')
+            ->setBody(
+                'votre reclamation a été refusé par l admin du page '
+            )
+        ;
+
+        $mailer->send($message);
         $flashy->warning('Reclamation refusé');
         return $this->redirectToRoute('Reclamations');
 
