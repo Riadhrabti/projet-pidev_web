@@ -1,4 +1,4 @@
-
+{% extends 'base.html.twig' %}
 {% block body %}
 
 
@@ -28,13 +28,9 @@
             <td>{{ form_widget(form.idarticle2) }}</td>
             <td>{{ form_errors(form.idarticle2) }}</td>
         </tr>
-        <tr>
-
-            <td>{{ form_label(form.etat) }}</td>
-            <td>{{ form_widget(form.etat) }}</td>
-            <td>{{ form_errors(form.etat) }}</td>
-        </tr>
 
     </table>
+
 {{ form_end(form) }}
+    <a href="{{ path('Echanges') }}">retour</a>
 {% endblock %}

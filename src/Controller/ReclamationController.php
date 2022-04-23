@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Reclamation;
 use App\Form\ReclamationAddType;
 use App\Repository\ReclamationRepository;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,13 +49,13 @@ class ReclamationController extends AbstractController
      *@return \Symfony\Component\HttpFoundation\Response
      * @Route ("/addReclamation/{id}" , name="addReclamation");
      */
-    function addReclamation(Request $request, $id)
+    function addReclamation(Request $request,$id,FlashyNotifier $flashy)
     {
 
         $Reclamation =new Reclamation();
         $Reclamation->setIdechange($id);
 
-        $form=$this->createForm(ReclamationAddType::class, $Reclamation);
+        $form=$this->createForm(ReclamationAddType::class,$Reclamation);
         $form->add('add', SubmitType::class);
         $form->handleRequest($request);
 
@@ -63,6 +64,7 @@ class ReclamationController extends AbstractController
             $Reclamation->setEtat(0);
             $em->persist($Reclamation);
             $em->flush();
+            $flashy->success('Reclamation envoyée');
             return  $this->redirectToRoute('Reclamations');
         }
 
@@ -70,6 +72,7 @@ class ReclamationController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
     /**
      * @param  Request $request
      *@return \Symfony\Component\HttpFoundation\Response
@@ -100,7 +103,7 @@ class ReclamationController extends AbstractController
      *@return \Symfony\Component\HttpFoundation\Response
      * @Route ("Reclamation/accepter/{id}",name="accepter");
      */
-    function  accpeterReclamation(Request $request ,ReclamationRepository $repository ,$id)
+    function  accpeterReclamation(Request $request ,ReclamationRepository $repository ,$id,FlashyNotifier $flashy)
     {
 
         $Reclamation = $repository->find($id);
@@ -108,6 +111,7 @@ class ReclamationController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
+        $flashy->info('Reclamation accepté');
         return $this->redirectToRoute('Reclamations');
 
     }
@@ -116,7 +120,7 @@ class ReclamationController extends AbstractController
      *@return \Symfony\Component\HttpFoundation\Response
      * @Route ("Reclamation/refuser/{id}",name="refuser");
      */
-    function  refuserReclamation(Request $request ,ReclamationRepository $repository ,$id)
+    function  refuserReclamation(Request $request ,ReclamationRepository $repository ,$id,FlashyNotifier $flashy)
     {
 
         $Reclamation = $repository->find($id);
@@ -124,6 +128,7 @@ class ReclamationController extends AbstractController
 
         $em = $this->getDoctrine()->getManager();
         $em->flush();
+        $flashy->warning('Reclamation refusé');
         return $this->redirectToRoute('Reclamations');
 
     }

@@ -33,11 +33,7 @@ class EchangeType extends AbstractType
                     'placeholder'=>'faire entrer l id article 2'
                 ]
             ])
-            ->add('etat',TextType::class, [
-                'attr'=>[
-                    'placeholder'=>'faire entrer l etat'
-                ]
-            ])
+
             ->add("add",SubmitType::class)
         ;
     }
