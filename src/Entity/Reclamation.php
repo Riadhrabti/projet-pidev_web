@@ -31,7 +31,7 @@ class Reclamation
     private $idmembre;
 
     /**
-     * @ORM\Column(type="string",length=255)
+     * @ORM\Column(type="datetime")
      * @Assert\NotBlank(message="this field should not be blank")
      */
     private $Daterec;
@@ -50,7 +50,6 @@ class Reclamation
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="this field should not be blank")
      */
     private $etat;
 
@@ -102,7 +101,6 @@ class Reclamation
     {
         $this->Daterec = $Daterec;
     }
-
 
 
     public function getDescription(): ?string

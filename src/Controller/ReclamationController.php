@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Reclamation;
+use App\Form\FilterType;
 use App\Form\ReclamationAddType;
+use App\Repository\EchangeRepository;
 use App\Repository\ReclamationRepository;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,10 +30,23 @@ class ReclamationController extends AbstractController
     /**
      * @Route("/Reclamations", name="Reclamations")
      */
-    public function ListReclamations(ReclamationRepository $repository)
+    public function ListReclamations(Request $request, ReclamationRepository $repository)
     {
+        $form = $this->createForm(FilterType::class);
+        $form->handleRequest($request);
+        $etat = -1;
+        if ($form->isSubmitted() && $form->isValid()) {
+            $etat = intval($form->getData()['etat']);
+        }
+        if ($etat == -1) {
+            $reclamations = $repository->findAll();
+        } else {
+            $reclamations = $repository->findBy(['etat'=>$etat]);
+        }
+
         return $this->render('Reclamation/ListReclamation.html.twig', [
-            'Reclamation' => $repository->findAll()
+            'form' => $form->createView(),
+            'Reclamation' => $reclamations
         ]);
     }
     /**
@@ -54,14 +70,14 @@ class ReclamationController extends AbstractController
 
         $Reclamation =new Reclamation();
         $Reclamation->setIdechange($id);
+        $Reclamation->setEtat(0);
+        $Reclamation->setDaterec(new \DateTime());
 
         $form=$this->createForm(ReclamationAddType::class,$Reclamation);
-        $form->add('add', SubmitType::class);
-        $form->handleRequest($request);
 
+        $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $em=$this->getDoctrine()->getManager();
-            $Reclamation->setEtat(0);
             $em->persist($Reclamation);
             $em->flush();
             $flashy->success('Reclamation envoyée');
@@ -149,5 +165,25 @@ class ReclamationController extends AbstractController
         $flashy->warning('Reclamation refusé');
         return $this->redirectToRoute('Reclamations');
 
+    }
+
+
+    /**
+     * @Route("/checkReclamation",name="checkReclamation")
+     */
+    public  function  checkReclamation(Request $request, ReclamationRepository $reclamationRepository){
+
+        if ($request->isXMLHttpRequest()) {
+            $idEchange = intval($request->get('idEchange'));
+            $reclamations = $reclamationRepository->findBy(['idechange'=>$idEchange], ['Daterec'=>'DESC']);
+            $lastReclamationDate = $reclamations[0]->getDaterec();
+            $date = new \DateTime();
+            $deffirence = $lastReclamationDate->diff($date)->d;
+            if ($deffirence < 3) {
+                return new JsonResponse(array('data' => false));
+            } else {
+                return new JsonResponse(array('data' => true));
+            }
+        }
     }
 }

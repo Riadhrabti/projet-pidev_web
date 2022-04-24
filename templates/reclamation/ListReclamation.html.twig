@@ -3,6 +3,11 @@
     <div class="card">
         <div class="card-body">
             <h1>liste des Reclamations</h1>
+            <div class="form-control">
+                {{ form_start(form) }}
+                {{ form_end(form) }}
+            </div>
+
             <table border="1" class="table datatable">
                 <thead>
                 <tr>
@@ -22,7 +27,7 @@
                         <td>{{R.id}}</td>
                         <td>{{R.titre}}</td>
                         <td>{{R.idmembre}}</td>
-                        <td>{{R.Daterec}}</td>
+                        <td>{{R.Daterec|date('Y-m-d')}}</td>
                         <td>{{R.Description}}</td>
                         <td>{{R.idechange}}</td>
                         <td>{{R.etat}}</td>

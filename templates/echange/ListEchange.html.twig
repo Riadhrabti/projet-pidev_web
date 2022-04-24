@@ -3,6 +3,10 @@
     <div class="card">
         <div class="card-body">
             <h1>liste des echanges</h1>
+            <div id="errorMsg" class="alert alert-danger d-none" role="alert">
+                vous avez déja envoyer une reclamation a propos cette echange dans les 3 derniers jours
+                <span id="isClawzed" class="float-right">X</span>
+            </div>
             <table border="1" class="table datatable">
                 <thead>
                 <tr>
@@ -29,7 +33,7 @@
 
                         <td><a href=" {{ path('deleteEchange' ,{'id':E.id})}} ">Delete</a></td>
                         <td><a href=" {{ path('updateEchange' ,{'id':E.id})}} ">UPDATE</a></td>
-                        <td><a href=" {{ path('addReclamation' ,{'id':E.id})}} ">Reclamer</a></td>
+                        <td><span class="fa-i-cursor" id="reclamationBtn" data-idEchange="{{ E.id }}" data-url="{{ path('addReclamation' ,{'id':E.id})}}">Reclamer</span></td>
 
 
                     </tr>
@@ -40,6 +44,30 @@
             <a href="{{ path('add') }}">ajouter une echange</a>
         </div>
     </div>
-
-
+{% endblock %}
+{% block additionalJavascripts %}
+    <script>
+        $("#reclamationBtn").click(function (){
+            let idEchange = $(this).attr("data-idEchange");
+            let href = $(this).attr("data-url");
+            $.ajax({
+                type: "GET",
+                url: "{{ path('checkReclamation') }}",
+                data: {
+                    idEchange
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.data == false) {
+                        $('#errorMsg').removeClass("d-none");
+                    } else {
+                        window.location.href = href;
+                    }
+                }
+            });
+        });
+        $("#isClawzed").click(function (){
+            $('#errorMsg').addClass("d-none");
+        })
+    </script>
 {% endblock %}
