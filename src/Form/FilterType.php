@@ -16,10 +16,10 @@ class FilterType extends AbstractType
             ->add('etat',ChoiceType::class, [
                 'choices'  => [
                     'Tout'=>-1,
-                    '0' => 0,
-                    '1' => 1,
-                    '2' => 2,
-                ],
+                'non traité' => 0,
+                'Accepté' => 1,
+                'Refusé' => 2,
+            ],
             ])
         ->add('filter', SubmitType::class);
 

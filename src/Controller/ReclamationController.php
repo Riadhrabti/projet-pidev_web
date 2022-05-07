@@ -184,6 +184,9 @@ class ReclamationController extends AbstractController
             } else {
                 return new JsonResponse(array('data' => true));
             }
+
         }
+
+
     }
 }
